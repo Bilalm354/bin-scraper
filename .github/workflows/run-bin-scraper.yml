@@ -1,33 +1,24 @@
-name: Run Bin Scraper on Push
-
-# Trigger the action every time code is pushed to the repository
+name: Playwright Tests
 on:
   push:
-    branches:
-      - main # This will run the action for pushes to the 'main' branch
-      # You can add more branches or use '*' to trigger on all branches:
-      # - "*"
-
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
 jobs:
-  run-scraper:
-    runs-on: ubuntu-latest # Use a runner with a recent version of Node.js
-
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "18" # Use your preferred Node.js version
-
+          node-version: lts/*
       - name: Install dependencies
-        run: |
-          npm install && npx playwright install
-
-      - name: Run Bin Scraper Script
-        run: |
-          npx ts-node main.ts
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run main
+        run: npm run main
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
