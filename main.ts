@@ -42,7 +42,7 @@ async function postToDiscord(embed: EmbedBuilder) {
   await client.login(DISCORD_TOKEN);
 }
 
-async function fetchBinCollectionSchedule() {
+export async function fetchBinCollectionScheduleAndSendDiscordMessage() {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
@@ -121,4 +121,4 @@ async function fetchBinCollectionSchedule() {
 }
 
 // Execute the script
-fetchBinCollectionSchedule();
+fetchBinCollectionScheduleAndSendDiscordMessage();
