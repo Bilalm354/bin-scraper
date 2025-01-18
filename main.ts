@@ -1,5 +1,5 @@
 import { chromium } from "playwright";
-import { Client, GatewayIntentBits } from "discord.js";
+import { Client, GatewayIntentBits, EmbedBuilder } from "discord.js";
 import { z } from "zod";
 import dotenv from "dotenv";
 
@@ -18,8 +18,8 @@ const envSchema = z.object({
 const env = envSchema.parse(process.env);
 const { DISCORD_TOKEN, CHANNEL_ID, HOUSE_NUMBER, POSTCODE } = env;
 
-// Function to send a message to Discord
-async function postToDiscord(message: string) {
+// Function to send a message to Discord as an embed
+async function postToDiscord(embed: EmbedBuilder) {
   const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
   client.once("ready", async () => {
@@ -27,15 +27,15 @@ async function postToDiscord(message: string) {
       console.log("Bot is online!");
       const channel = (await client.channels.fetch(CHANNEL_ID)) as any;
       if (channel && channel.isTextBased()) {
-        await channel.send(message);
-        console.log("Message sent to Discord:", message);
+        await channel.send({ embeds: [embed] });
+        console.log("Embed sent to Discord.");
       } else {
         console.error("Channel not found or not text-based.");
       }
     } catch (error) {
-      console.error("Error sending message to Discord:", error);
+      console.error("Error sending embed to Discord:", error);
     } finally {
-      await client.destroy(); // Stop the bot after sending the message
+      await client.destroy(); // Stop the bot after sending the embed
     }
   });
 
@@ -64,7 +64,11 @@ async function fetchBinCollectionSchedule() {
     );
 
     const binCount = await binElements.count();
-    const binCollectionDetails: string[] = [];
+    const binCollectionDetails: {
+      name: string;
+      value: string;
+      inline: boolean;
+    }[] = [];
 
     for (let i = 0; i < binCount; i++) {
       const binType = await binElements
@@ -79,9 +83,11 @@ async function fetchBinCollectionSchedule() {
       if (binType && binNextDate) {
         // Extract the bin type and date properly
         const date = binNextDate.split("Next:")[1]?.trim(); // Extract the date part only
-        binCollectionDetails.push(
-          `${binType.trim()}: ${date || "No date available"}`
-        );
+        binCollectionDetails.push({
+          name: `${binType.trim()}`,
+          value: `${date || "No date available"}`,
+          inline: false,
+        });
       }
     }
 
@@ -96,18 +102,17 @@ async function fetchBinCollectionSchedule() {
       .toLocaleDateString("en-GB", options)
       .replace(",", "");
 
-    // Create the message for Discord with improved formatting
-    const message =
-      `**Next Bin Collection Dates as of ${todayDateFormatted}**:\n\n` +
-      binCollectionDetails
-        .map((detail) => `${detail.split(":")[0]}: ${detail.split(":")[1]}`)
-        .join("\n") +
-      `\n\n<https://www.boston.gov.uk/article/27449/Your-Waste-Collections>\n\n`;
+    // Create an embed for Discord with better formatting
+    const embed = new EmbedBuilder()
+      .setColor(0x0099ff)
+      .setTitle(`Next Bin Collection Dates as of ${todayDateFormatted}`)
+      .addFields(binCollectionDetails)
+      .setURL("https://www.boston.gov.uk/article/27449/Your-Waste-Collections");
 
-    console.log("Formatted message for Discord:\n", message);
+    console.log("Formatted embed for Discord:\n", embed);
 
-    // Send the formatted message to Discord
-    await postToDiscord(message);
+    // Send the embed to Discord
+    await postToDiscord(embed);
   } catch (error) {
     console.error("Error fetching bin collection schedule:", error);
   } finally {
