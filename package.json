@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Gets bin information and emails users",
   "main": "main.js",
-  "scripts": {},
+  "scripts": {
+    "main": "npx ts-node main.ts"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
