@@ -98,14 +98,10 @@ async function fetchBinCollectionSchedule() {
       month: "long",
       year: "numeric",
     };
-    const todayDateFormatted = today
-      .toLocaleDateString("en-GB", options)
-      .replace(",", "");
 
     // Create an embed for Discord with better formatting
     const embed = new EmbedBuilder()
       .setColor(0x0099ff)
-      .setTitle(`Next Bin Collection Dates as of ${todayDateFormatted}`)
       .addFields(binCollectionDetails)
       .setURL("https://www.boston.gov.uk/article/27449/Your-Waste-Collections");
 
