@@ -1,18 +1,10 @@
 import { chromium } from "playwright";
 import { Client, GatewayIntentBits, EmbedBuilder } from "discord.js";
-import { z } from "zod";
 import dotenv from "dotenv";
+import { envSchema } from "./envSchema";
 
 // Load environment variables
 dotenv.config();
-
-// Define Zod schema for validation
-const envSchema = z.object({
-  DISCORD_TOKEN: z.string().nonempty("DISCORD_TOKEN is required"),
-  CHANNEL_ID: z.string().nonempty("CHANNEL_ID is required"),
-  HOUSE_NUMBER: z.string().nonempty("HOUSE_NUMBER is required"),
-  POSTCODE: z.string().nonempty("POSTCODE is required"),
-});
 
 // Parse and validate environment variables
 const env = envSchema.parse(process.env);
