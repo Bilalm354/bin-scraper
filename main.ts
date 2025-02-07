@@ -1,112 +1,33 @@
-import { chromium } from "playwright";
-import { Client, GatewayIntentBits, EmbedBuilder } from "discord.js";
-import dotenv from "dotenv";
-import { envSchema } from "./envSchema";
-
-// Load environment variables
-dotenv.config();
-
-// Parse and validate environment variables
-const env = envSchema.parse(process.env);
-const { DISCORD_TOKEN, CHANNEL_ID, HOUSE_NUMBER, POSTCODE } = env;
-
-// Function to send a message to Discord as an embed
-async function postToDiscord(embed: EmbedBuilder) {
-  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
-  client.once("ready", async () => {
-    try {
-      console.log("Bot is online!");
-      const channel = (await client.channels.fetch(CHANNEL_ID)) as any;
-      if (channel && channel.isTextBased()) {
-        await channel.send({ embeds: [embed] });
-        console.log("Embed sent to Discord.");
-      } else {
-        console.error("Channel not found or not text-based.");
-      }
-    } catch (error) {
-      console.error("Error sending embed to Discord:", error);
-    } finally {
-      await client.destroy(); // Stop the bot after sending the embed
-    }
-  });
-
-  await client.login(DISCORD_TOKEN);
+import { sendSms } from "./functions/sendSms";
+import { env } from "./env";
+import { postToDiscord } from "./functions/postToDiscord";
+import { fetchBinCollectionSchedule } from "./functions/fetchBinCollectionSchedule";
+import { constructMessage } from "./functions/constructMessage";
+export interface BinCollectionDetails {
+  name: string; // bin type
+  value: string; // date
+  inline: boolean;
 }
+[];
 
-async function fetchBinCollectionSchedule() {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
+async function main() {
+  const binCollectionDetails = await fetchBinCollectionSchedule();
 
-  try {
-    await page.goto(
-      "https://www.boston.gov.uk/article/27449/Your-Waste-Collections"
-    );
-    await page.getByLabel("Property name or number (").click();
-    await page.getByLabel("Property name or number (").fill(HOUSE_NUMBER);
-    await page.getByLabel("Property name or number (").press("Tab");
-    await page.getByLabel("Postcode:*").fill(POSTCODE);
-    await page.getByLabel("Postcode:*").press("Tab");
-    await page.getByRole("button", { name: "Next " }).press("Enter");
-    await page.getByRole("button", { name: "Next " }).click();
+  if (!binCollectionDetails) {
+    return;
+  }
 
-    // Wait for the elements containing bin collection info
-    const binElements = await page.locator(
-      "#BBCWASTECOLLECTIONS_SERVICE_JOBSDISPLAY .grid__cell .item__content"
-    );
+  await postToDiscord(binCollectionDetails);
 
-    const binCount = await binElements.count();
-    const binCollectionDetails: {
-      name: string;
-      value: string;
-      inline: boolean;
-    }[] = [];
-
-    for (let i = 0; i < binCount; i++) {
-      const binType = await binElements
-        .nth(i)
-        .locator(".item__title a")
-        .textContent();
-      const binNextDate = await binElements
-        .nth(i)
-        .locator('div:has-text("Next:")')
-        .textContent();
-
-      if (binType && binNextDate) {
-        // Extract the bin type and date properly
-        const date = binNextDate.split("Next:")[1]?.trim(); // Extract the date part only
-        binCollectionDetails.push({
-          name: `${binType.trim()}`,
-          value: `${date || "No date available"}`,
-          inline: false,
-        });
-      }
+  const phoneNumbers = [env.PHONE_NUMBER];
+  for (const phoneNumber of phoneNumbers) {
+    if (phoneNumber) {
+      await sendSms({
+        to: phoneNumber,
+        message: constructMessage(binCollectionDetails),
+      });
     }
-
-    const today = new Date();
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-
-    // Create an embed for Discord with better formatting
-    const embed = new EmbedBuilder()
-      .setColor(0x0099ff)
-      .addFields(binCollectionDetails)
-      .setURL("https://www.boston.gov.uk/article/27449/Your-Waste-Collections");
-
-    console.log("Formatted embed for Discord:\n", embed);
-
-    // Send the embed to Discord
-    await postToDiscord(embed);
-  } catch (error) {
-    console.error("Error fetching bin collection schedule:", error);
-  } finally {
-    await browser.close();
   }
 }
 
-// Execute the script
-fetchBinCollectionSchedule();
+main();

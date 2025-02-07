@@ -1,11 +1,9 @@
 type SendSmsOptions = {
-  from: string;
   to: string;
   message: string;
 };
 
 export async function sendSms({
-  from,
   to,
   message: msg,
 }: SendSmsOptions): Promise<void> {
@@ -16,7 +14,7 @@ export async function sendSms({
       method: "POST",
       headers: { Authorization: `Bearer ${process.env.VOODOO_SMS_API_KEY}` },
       body: JSON.stringify({
-        from,
+        from: "Which Bin",
         to,
         msg,
       }),
