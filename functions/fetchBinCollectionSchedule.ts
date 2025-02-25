@@ -52,6 +52,7 @@ export async function fetchBinCollectionSchedule() {
     return binCollectionDetails;
   } catch (error) {
     console.error("Error fetching bin collection schedule:", error);
+    throw error;
   } finally {
     await browser.close();
   }
