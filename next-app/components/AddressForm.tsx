@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { FaTrashAlt } from "react-icons/fa"; // You can use an icon library like react-icons
 import {
   Form,
   FormControl,
@@ -13,11 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Card } from "./ui/card";
+import { Card, CardDescription, CardFooter, CardHeader } from "./ui/card";
+import { submitForm } from "@/app/serverActions/submitForm";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email format").optional(),
+  email: z.string().email("Invalid email format"),
   phone: z
     .string()
     .regex(
@@ -39,62 +41,94 @@ const AddressForm = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    console.log("on submit");
+    console.log({ values });
+    submitForm(values);
   }
 
   return (
-    <Card>
-      <div className="p-8 rounded-lg shadow-lg">
-        <h2 className="text-center text-2xl font-semibold mb-4">
-          Please fill out the following form to sign up
-        </h2>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Bob Lee Swagger" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="bob.lee@swagger.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone</FormLabel>
-                  <FormControl>
-                    <Input placeholder="447873456789" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-full">
-              Submit
-            </Button>
-          </form>
-        </Form>
-      </div>
+    <Card className="py-4 px-8 rounded-lg shadow-lg">
+      <CardHeader>
+        <CardDescription>
+          <h2 className="text-center text-3xl font-semibold mb-4 flex justify-center items-center">
+            <FaTrashAlt className="mr-2 text-2xl" />
+            Bin Day
+          </h2>
+          <p className="text-center text-lg">
+            Sign up to receive weekly text message reminders about which bin is
+            due for collection in your area.
+          </p>
+        </CardDescription>
+      </CardHeader>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Bob Lee Swagger" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="bob.lee@swagger.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone</FormLabel>
+                <FormControl>
+                  <Input placeholder="447873456789" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Address</FormLabel>
+                <FormControl>
+                  <Input placeholder="xxx" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" className="w-full">
+            Submit
+          </Button>
+        </form>
+      </Form>
+      <CardFooter>
+        <CardDescription>
+          <p className="text-center mt-8">
+            This service is free and requires no payment details. If this
+            changes, we’ll send you a payment link, and you can choose whether
+            to continue.
+          </p>
+        </CardDescription>
+      </CardFooter>
     </Card>
   );
 };
