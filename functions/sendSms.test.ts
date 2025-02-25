@@ -8,13 +8,13 @@ describe("sendSms", () => {
   // Skipped because I do not want to waste texts
   it.skip("sends an sms to me", async () => {
     const data = await sendSms({
-      to: env.PHONE_NUMBER!,
+      to: "44 put real number here to test",
       message: "Your mum",
     });
 
     expect(data).toEqual({
       count: expect.any(Number),
-      originator: "Which Bin",
+      originator: "Bin Biily",
       body: expect.any(String),
       scheduledDateTime: null,
       credits: 1,
