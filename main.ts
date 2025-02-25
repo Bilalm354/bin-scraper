@@ -2,6 +2,7 @@ import { sendSms } from "./functions/sendSms";
 import { postToDiscord } from "./functions/postToDiscord";
 import { fetchBinCollectionSchedule } from "./functions/fetchBinCollectionSchedule";
 import { constructMessage } from "./functions/constructMessage";
+import { getPhoneNumbers } from "./db/queries/users/getPhoneNumbers";
 export interface BinCollectionDetails {
   name: string; // bin type
   value: string; // date
@@ -18,14 +19,12 @@ async function main() {
 
   await postToDiscord(binCollectionDetails);
 
-  const phoneNumbers: string[] = [];
+  const phoneNumbers: string[] = await getPhoneNumbers();
   for (const phoneNumber of phoneNumbers) {
-    if (phoneNumber) {
-      await sendSms({
-        to: phoneNumber,
-        message: constructMessage(binCollectionDetails),
-      });
-    }
+    await sendSms({
+      to: phoneNumber,
+      message: constructMessage(binCollectionDetails),
+    });
   }
 }
 

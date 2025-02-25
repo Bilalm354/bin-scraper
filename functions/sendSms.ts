@@ -14,13 +14,16 @@ export async function sendSms({
       method: "POST",
       headers: { Authorization: `Bearer ${process.env.VOODOO_SMS_API_KEY}` },
       body: JSON.stringify({
-        from: "Which Bin",
+        from: "Bin Billy",
         to,
         msg,
       }),
     });
     const data = await response.json();
     console.log({ data });
+    if (data.error) {
+      throw data.error.msg;
+    }
     return data;
   } catch (error) {
     console.error("Failed to send SMS: ", error);
