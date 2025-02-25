@@ -10,7 +10,8 @@ export async function fetchBinCollectionSchedule() {
 
   try {
     await page.goto(
-      "https://www.boston.gov.uk/article/27449/Your-Waste-Collections"
+      "https://www.boston.gov.uk/article/27449/Your-Waste-Collections",
+      { timeout: 60000 }
     );
     await page.getByLabel("Property name or number (").click();
     await page.getByLabel("Property name or number (").fill(HOUSE_NUMBER);
