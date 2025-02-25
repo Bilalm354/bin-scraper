@@ -9,6 +9,7 @@ export async function submitForm({
   email,
   phone,
   address,
+  postcode,
 }: z.infer<typeof formSchema>) {
   console.log({ name, email, phone, address });
 
@@ -18,6 +19,7 @@ export async function submitForm({
     email,
     phone,
     address,
+    postcode,
   });
 
   // You can also handle other actions after posting to Discord (e.g., saving data, sending a confirmation message, etc.)

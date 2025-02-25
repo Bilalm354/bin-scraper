@@ -1,10 +1,9 @@
-import AddressForm from "@/components/AddressForm";
-import "./globals.css";
+import { AddressForm } from "@/components/AddressForm";
 
 export default function Home() {
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-xl">
         <AddressForm />
       </div>
     </div>

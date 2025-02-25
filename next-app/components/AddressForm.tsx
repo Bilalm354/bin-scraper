@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardDescription, CardFooter, CardHeader } from "./ui/card";
 import { submitForm } from "@/app/serverActions/submitForm";
+import { useRouter } from "next/navigation";
 
 export const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -23,27 +24,29 @@ export const formSchema = z.object({
   phone: z
     .string()
     .regex(
-      /^44\d{9,10}$/,
-      "Phone number must start with 44 and be a valid UK number"
+      /^(44\d{9,10}|0\d{9,10})$/,
+      "Phone number must start with 44 or 0 and be a valid UK number"
     ),
   address: z.string().min(1, "Address is required"),
+  postcode: z.string(),
 });
 
-const AddressForm = () => {
+export function AddressForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       email: "",
-      phone: "44",
+      phone: "",
       address: "",
+      postcode: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("on submit");
-    console.log({ values });
     submitForm(values);
+    router.push("/thank-you");
   }
 
   return (
@@ -70,7 +73,12 @@ const AddressForm = () => {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Bob Lee Swagger" {...field} />
+                  <Input
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Bob Lee Swagger"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -83,7 +91,12 @@ const AddressForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="bob.lee@swagger.com" {...field} />
+                  <Input
+                    type="email"
+                    autoComplete="email"
+                    placeholder="bob.lee@swagger.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -96,7 +109,12 @@ const AddressForm = () => {
               <FormItem>
                 <FormLabel>Phone</FormLabel>
                 <FormControl>
-                  <Input placeholder="447873456789" {...field} />
+                  <Input
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="447873456789 or 07873456789"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -109,7 +127,30 @@ const AddressForm = () => {
               <FormItem>
                 <FormLabel>Address</FormLabel>
                 <FormControl>
-                  <Input placeholder="xxx" {...field} />
+                  <Input
+                    type="text"
+                    autoComplete="street-address"
+                    placeholder="123 Bin Street"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="postcode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Postcode</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    autoComplete="postal-code"
+                    placeholder="XEX 999"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -131,6 +172,4 @@ const AddressForm = () => {
       </CardFooter>
     </Card>
   );
-};
-
-export default AddressForm;
+}
