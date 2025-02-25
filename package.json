@@ -4,15 +4,15 @@
   "description": "Gets bin information and emails users",
   "main": "main.js",
   "scripts": {
-    "main": "npx ts-node main.ts",
+    "main": "cd next-app && npm run main",
     "test": "npx jest",
     "db-push": "npx drizzle-kit push",
-    "db-cli": "export $(grep -v '^#' .env | xargs) && psql $DATABASE_URL"
+    "db-cli": "export $(grep -v '^#' .env | xargs) && psql $DATABASE_URL",
+    "next": "cd next-app && npm run dev"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.7",
     "dotenv": "^16.4.7",
     "drizzle-kit": "^0.30.4",
@@ -22,8 +22,6 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@types/jest": "^29.5.14",
-    "discord.js": "^14.17.3",
     "drizzle-orm": "^0.39.3",
     "postgres": "^3.4.5",
     "zod": "^3.24.1"
