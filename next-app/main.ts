@@ -1,7 +1,7 @@
 import { sendSms } from "./functions/sendSms";
 import { fetchBinCollectionSchedule } from "./functions/fetchBinCollectionSchedule";
 import { constructMessage } from "./functions/constructMessage";
-import { getPhoneNumbers } from "../db/queries/users/getPhoneNumbers";
+import { getPhoneNumbers } from "./db/queries/users/getPhoneNumbers";
 import { postBinCollectionDetailsToDiscordBinChannel } from "./functions/discord/postBinCollectionDetailsToDiscordBinChannel";
 
 async function main() {
