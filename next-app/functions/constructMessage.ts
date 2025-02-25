@@ -1,4 +1,4 @@
-import { BinCollectionDetails } from "../main";
+import { BinCollectionDetails } from "@/BinCollectionDetails";
 
 export function constructMessage(
   binCollectionDetailsArray: BinCollectionDetails[]

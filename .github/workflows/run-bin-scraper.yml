@@ -2,8 +2,7 @@ name: Run main.ts
 on:
   workflow_dispatch:
   schedule:
-    - cron: "50 9 * * 0" # Run every Sunday at 9:50 AM UTC
-    - cron: "50 20 * * 0" # Run every Sunday at 8:50 PM UTC
+    - cron: "50 14 * * 0" # Run every Sunday at 2:50 PM UTC
 jobs:
   test:
     timeout-minutes: 60
@@ -26,3 +25,5 @@ jobs:
           POSTCODE: ${{ secrets.POSTCODE }}
           VOODOO_SMS_API_KEY: ${{ secrets.VOODOO_SMS_API_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NODE_ENV: "production"
+          DISCORD_NEW_SIGN_UP_CHANNEL_ID: ${{ secrets.DISCORD_NEW_SIGN_UP_CHANNEL_ID }}

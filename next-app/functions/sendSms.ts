@@ -8,13 +8,17 @@ export async function sendSms({
   message: msg,
 }: SendSmsOptions): Promise<void> {
   try {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("Not sending text on prod");
+      return;
+    }
     const url = new URL("https://api.voodoosms.com/sendsms");
 
     const response = await fetch(url.toString(), {
       method: "POST",
       headers: { Authorization: `Bearer ${process.env.VOODOO_SMS_API_KEY}` },
       body: JSON.stringify({
-        from: "Bin Billy",
+        from: "Bin Day",
         to,
         msg,
       }),
