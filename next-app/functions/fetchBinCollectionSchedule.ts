@@ -1,6 +1,6 @@
 import { chromium } from "@playwright/test";
-import { BinCollectionDetails } from "../main";
 import { env } from "../env";
+import { BinCollectionDetails } from "@/BinCollectionDetails";
 
 export async function fetchBinCollectionSchedule() {
   const { HOUSE_NUMBER, POSTCODE } = env;
