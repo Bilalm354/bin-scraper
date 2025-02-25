@@ -7,5 +7,5 @@ export const envSchema = z.object({
   HOUSE_NUMBER: z.string().nonempty("HOUSE_NUMBER is required"),
   POSTCODE: z.string().nonempty("POSTCODE is required"),
   VOODOO_SMS_API_KEY: z.string().nonempty(),
-  PHONE_NUMBER: z.string().optional(),
+  DATABASE_URL: z.string(),
 });

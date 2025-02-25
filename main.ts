@@ -1,5 +1,4 @@
 import { sendSms } from "./functions/sendSms";
-import { env } from "./env";
 import { postToDiscord } from "./functions/postToDiscord";
 import { fetchBinCollectionSchedule } from "./functions/fetchBinCollectionSchedule";
 import { constructMessage } from "./functions/constructMessage";
@@ -19,7 +18,7 @@ async function main() {
 
   await postToDiscord(binCollectionDetails);
 
-  const phoneNumbers = [env.PHONE_NUMBER];
+  const phoneNumbers: string[] = [];
   for (const phoneNumber of phoneNumbers) {
     if (phoneNumber) {
       await sendSms({

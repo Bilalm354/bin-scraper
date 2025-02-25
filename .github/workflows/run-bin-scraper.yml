@@ -25,3 +25,4 @@ jobs:
           HOUSE_NUMBER: ${{ secrets.HOUSE_NUMBER }}
           POSTCODE: ${{ secrets.POSTCODE }}
           VOODOO_SMS_API_KEY: ${{ secrets.VOODOO_SMS_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
