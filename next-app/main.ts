@@ -4,7 +4,7 @@ import { constructMessage } from "./functions/constructMessage";
 import { getPhoneNumbers } from "./db/queries/users/getPhoneNumbers";
 import { postBinCollectionDetailsToDiscordBinChannel } from "./functions/discord/postBinCollectionDetailsToDiscordBinChannel";
 
-async function main() {
+export async function main() {
   const binCollectionDetails = await fetchBinCollectionSchedule();
 
   if (!binCollectionDetails) {
