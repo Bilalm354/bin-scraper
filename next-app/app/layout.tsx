@@ -6,7 +6,7 @@ export const metadata = {
   title: "Bin Day",
   description: "Reminders about which bin is due for collection in your area.",
   icons: {
-    icon: "/icon.svg",
+    icon: "/favicon.ico",
   },
   viewport: "width=device-width, initial-scale=1",
 };
