@@ -10,8 +10,11 @@ export async function postDiscordEmbedToChannel({
   channelId: string;
   embed: EmbedBuilder;
 }) {
+  console.log("a");
   const { DISCORD_TOKEN } = env;
+  console.log({ DISCORD_TOKEN, channelId, embed });
   const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
   client.once("ready", async () => {
     try {
       console.log("Bot is online!");
