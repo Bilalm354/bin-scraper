@@ -12,7 +12,14 @@ export async function postDiscordEmbedToChannel({
 }) {
   console.log("a");
   const { DISCORD_TOKEN } = env;
-  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+  const client = new Client({
+    intents: [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.MessageContent,
+      GatewayIntentBits.GuildMembers,
+    ],
+  });
 
   console.log("after client definition");
   client.once("ready", async () => {
