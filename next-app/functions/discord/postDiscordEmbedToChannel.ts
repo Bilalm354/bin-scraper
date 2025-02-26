@@ -1,7 +1,7 @@
 "use server";
 
+import { env } from "@/env";
 import { Client, EmbedBuilder, GatewayIntentBits } from "discord.js";
-import { env } from "../../env";
 
 export async function postDiscordEmbedToChannel({
   channelId,

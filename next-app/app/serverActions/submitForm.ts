@@ -13,7 +13,6 @@ export async function submitForm({
 }: z.infer<typeof formSchema>) {
   console.log({ name, email, phone, address });
 
-  // Post the user's information to the Discord channel
   await postToDiscordSignUpChannel({
     name,
     email,
@@ -21,6 +20,4 @@ export async function submitForm({
     address,
     postcode,
   });
-
-  // You can also handle other actions after posting to Discord (e.g., saving data, sending a confirmation message, etc.)
 }

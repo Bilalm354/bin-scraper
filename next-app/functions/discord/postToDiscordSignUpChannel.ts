@@ -18,6 +18,7 @@ export async function postToDiscordSignUpChannel({
   postcode: string;
 }) {
   const { DISCORD_NEW_SIGN_UP_CHANNEL_ID } = env;
+  console.log("in function");
 
   const embed = new EmbedBuilder()
     .setColor(0x0099ff)
@@ -29,6 +30,7 @@ export async function postToDiscordSignUpChannel({
       { name: "Address", value: address, inline: true },
       { name: "Postcode", value: postcode, inline: true }
     );
+  console.log("Generated Embed");
 
   await postDiscordEmbedToChannel({
     channelId: DISCORD_NEW_SIGN_UP_CHANNEL_ID,
