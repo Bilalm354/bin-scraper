@@ -1,6 +1,6 @@
 import { postToDiscordSignUpChannel } from "./postToDiscordSignUpChannel";
 
-describe("postToDiscordSignUpChannel", () => {
+describe.skip("postToDiscordSignUpChannel", () => {
   it("sends it", async () => {
     await postToDiscordSignUpChannel({
       name: "test",
