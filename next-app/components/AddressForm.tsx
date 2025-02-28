@@ -163,11 +163,26 @@ export function AddressForm() {
       </Form>
       <CardFooter>
         <CardDescription>
-          <p className="text-center mt-8">
-            This service is free and requires no payment details. If this
-            changes, we’ll send you a payment link, and you can choose whether
-            to continue.
-          </p>
+          <div className="mt-10">
+            <p className="text-center mt-8">
+              This service is free and requires no payment details. If this
+              changes, we’ll send you a payment link, and you can choose whether
+              to continue.
+            </p>
+            <h3 className="text-lg font-semibold text-center mt-8">
+              How It Works
+            </h3>
+            <p className="text-center mt-8">
+              We fetch bin collection schedules directly from local council
+              websites and using available public APIs where possible. Once
+              registered, you&apos;ll receive a weekly SMS reminder telling you
+              which bin to put out, so you never miss a collection day. Need to
+              update your details? You can resubmit the form at any time to
+              change your contact information or unsubscribe. Your privacy is
+              important to us. We’ll never share your details with third
+              parties.
+            </p>
+          </div>
         </CardDescription>
       </CardFooter>
     </Card>
