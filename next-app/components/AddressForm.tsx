@@ -50,7 +50,8 @@ export function AddressForm() {
   }
 
   return (
-    <Card className="py-4 px-8 rounded-lg shadow-lg">
+    // bottom margin so that keyboard doesn't cover last input
+    <Card className="py-4 px-8 rounded-lg shadow-lg mb-20">
       <CardHeader>
         <CardDescription>
           <h2 className="text-center text-3xl font-semibold mb-4 flex justify-center items-center">
