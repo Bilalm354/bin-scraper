@@ -50,8 +50,7 @@ export function AddressForm() {
   }
 
   return (
-    // min h screen so that keyboard doesn't cover last input
-    <Card className="min-h-screen py-4 px-8 rounded-lg shadow-lg">
+    <Card className="py-4 px-8 rounded-lg shadow-lg">
       <CardHeader>
         <CardDescription>
           <h2 className="text-center text-3xl font-semibold mb-4 flex justify-center items-center">
