@@ -5,6 +5,7 @@ import {
   serial,
   text,
   varchar,
+  timestamp,
 } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
@@ -15,4 +16,5 @@ export const usersTable = pgTable("users", {
   postcode: varchar("postcode", { length: 256 }).notNull().default("TODO"),
   emailAddress: text("email_address"),
   isActive: boolean("is_active").default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
