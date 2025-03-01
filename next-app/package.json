@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "main": "tsx main.ts"
+    "main": "tsx main.ts",
+    "db:push": "npx drizzle-kit push"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.2",

@@ -2,7 +2,7 @@ import { chromium } from "@playwright/test";
 import { env } from "../env";
 import { BinCollectionDetails } from "@/BinCollectionDetails";
 
-export async function fetchBinCollectionSchedule() {
+export async function fetchBostonBinCollectionSchedule() {
   const { HOUSE_NUMBER, POSTCODE } = env;
 
   const browser = await chromium.launch();

@@ -1,8 +1,8 @@
-import { fetchBinCollectionSchedule } from "./fetchBinCollectionSchedule";
+import { fetchBostonBinCollectionSchedule } from "./fetchBostonBinCollectionSchedule";
 
 describe("fetchBinCollectionSchedule", () => {
   it("returns x", async () => {
-    const schedule = await fetchBinCollectionSchedule();
+    const schedule = await fetchBostonBinCollectionSchedule();
     expect(schedule).toMatchInlineSnapshot(`
 [
   {

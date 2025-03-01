@@ -1,19 +1,20 @@
 import { sendSms } from "./functions/sendSms";
-import { fetchBinCollectionSchedule } from "./functions/fetchBinCollectionSchedule";
+import { fetchBostonBinCollectionSchedule } from "./functions/fetchBostonBinCollectionSchedule";
 import { constructMessage } from "./functions/constructMessage";
-import { getPhoneNumbers } from "./db/queries/users/getPhoneNumbers";
-import { postBinCollectionDetailsToDiscordBinChannel } from "./functions/discord/postBinCollectionDetailsToDiscordBinChannel";
+import { getPhoneNumbersWherePostcodeBoston as getPhoneNumbersWherePostcodeBostonAndUserIsActive } from "./db/queries/users/getPhoneNumbers";
+import { postBinCollectionDetailsToDiscordBinChannel as postBinCollectionDetailsToBostonDiscordBinChannel } from "./functions/discord/postBinCollectionDetailsToDiscordBinChannel";
 
 export async function main() {
-  const binCollectionDetails = await fetchBinCollectionSchedule();
+  const binCollectionDetails = await fetchBostonBinCollectionSchedule();
 
   if (!binCollectionDetails) {
     return;
   }
 
-  await postBinCollectionDetailsToDiscordBinChannel(binCollectionDetails);
+  await postBinCollectionDetailsToBostonDiscordBinChannel(binCollectionDetails);
 
-  const phoneNumbers: string[] = await getPhoneNumbers();
+  const phoneNumbers: string[] =
+    await getPhoneNumbersWherePostcodeBostonAndUserIsActive();
   for (const phoneNumber of phoneNumbers) {
     await sendSms({
       to: phoneNumber,
