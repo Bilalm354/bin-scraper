@@ -8,10 +8,6 @@ export async function sendSms({
   message: msg,
 }: SendSmsOptions): Promise<void> {
   try {
-    if (process.env.NODE_ENV !== "production") {
-      console.warn("Not sending text on prod");
-      return;
-    }
     const url = new URL("https://api.voodoosms.com/sendsms");
 
     const response = await fetch(url.toString(), {

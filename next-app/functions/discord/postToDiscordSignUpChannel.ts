@@ -8,13 +8,13 @@ export async function postToDiscordSignUpChannel({
   name,
   email,
   phone,
-  address,
+  houseNumber,
   postcode,
 }: {
   name: string;
   email: string;
   phone: string;
-  address: string;
+  houseNumber: number;
   postcode: string;
 }) {
   const { DISCORD_NEW_SIGN_UP_CHANNEL_ID } = env;
@@ -27,7 +27,7 @@ export async function postToDiscordSignUpChannel({
       { name: "Name", value: name, inline: true },
       { name: "Email", value: email, inline: true },
       { name: "Phone", value: phone, inline: true },
-      { name: "Address", value: address, inline: true },
+      { name: "House Number", value: String(houseNumber), inline: true },
       { name: "Postcode", value: postcode, inline: true }
     );
   console.log("Generated Embed");

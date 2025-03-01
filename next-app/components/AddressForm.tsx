@@ -27,7 +27,7 @@ export const formSchema = z.object({
       /^(44\d{9,10}|0\d{9,10})$/,
       "Phone number must start with 44 or 0 and be a valid UK number"
     ),
-  address: z.string().min(1, "Address is required"),
+  houseNumber: z.string(),
   postcode: z.string(),
 });
 
@@ -39,7 +39,7 @@ export function AddressForm() {
       name: "",
       email: "",
       phone: "",
-      address: "",
+      houseNumber: "",
       postcode: "",
     },
   });
@@ -112,7 +112,7 @@ export function AddressForm() {
                   <Input
                     type="tel"
                     autoComplete="tel"
-                    placeholder="447873456789 or 07873456789"
+                    placeholder="447873456789"
                     {...field}
                   />
                 </FormControl>
@@ -122,15 +122,15 @@ export function AddressForm() {
           />
           <FormField
             control={form.control}
-            name="address"
+            name="houseNumber"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Address</FormLabel>
+                <FormLabel>House Number</FormLabel>
                 <FormControl>
                   <Input
                     type="text"
                     autoComplete="street-address"
-                    placeholder="123 Bin Street"
+                    placeholder="123"
                     {...field}
                   />
                 </FormControl>
