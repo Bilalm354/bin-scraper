@@ -13,7 +13,8 @@
     "db:start:persistent": "docker run --name dev-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=my_dev_db -p 5432:5432 -v pgdata:/var/lib/postgresql/data -d postgres",
     "db:stop": "docker stop dev-db && docker rm dev-db",
     "db:logs": "docker logs -f dev-db",
-    "db:restart": "npm run db:stop && npm run db:start"
+    "db:restart": "npm run db:stop && npm run db:start",
+    "db:cli:local": "psql postgres://postgres:postgres@localhost:5432/my_dev_db"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.2",
