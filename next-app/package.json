@@ -14,7 +14,10 @@
     "db:stop": "docker stop dev-db && docker rm dev-db",
     "db:logs": "docker logs -f dev-db",
     "db:restart": "npm run db:stop && npm run db:start",
-    "db:cli:local": "psql postgres://postgres:postgres@localhost:5432/my_dev_db"
+    "db:cli:local": "psql postgres://postgres:postgres@localhost:5432/my_dev_db",
+    "playwright": "npx playwright test",
+    "playwright:ui": "npx playwright test --ui",
+    "playwright:debug": "npx playwright test --debug"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.2",

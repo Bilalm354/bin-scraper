@@ -31,7 +31,7 @@ export const formSchema = z.object({
   postcode: z.string(),
 });
 
-export function AddressForm() {
+export function SignUpForm() {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -129,7 +129,7 @@ export function AddressForm() {
                 <FormControl>
                   <Input
                     type="text"
-                    autoComplete="street-address"
+                    autoComplete="address-line1"
                     placeholder="123"
                     {...field}
                   />
