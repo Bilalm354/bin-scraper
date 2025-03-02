@@ -9,5 +9,5 @@ export const envSchema = z.object({
   VOODOO_SMS_API_KEY: z.string().nonempty(),
   DATABASE_URL: z.string(),
   DISCORD_NEW_SIGN_UP_CHANNEL_ID: z.string(),
-  PHONE_NUMBER: z.string(),
+  PHONE_NUMBER: z.string().optional(),
 });
