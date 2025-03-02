@@ -13,11 +13,14 @@ jobs:
         with:
           node-version: lts/*
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
+        working-directory: next-app
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+        working-directory: next-app
       - name: Run main
-        run: cd next-app && npm run main
+        run: npm run main
+        working-directory: next-app
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
