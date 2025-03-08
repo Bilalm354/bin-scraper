@@ -3,6 +3,7 @@ import { fetchBostonBinCollectionSchedule } from "./functions/fetchBostonBinColl
 import { constructMessage } from "./functions/constructMessage";
 import { getPhoneNumbersWherePostcodeBoston as getPhoneNumbersWherePostcodeBostonAndUserIsActive } from "./db/queries/users/getPhoneNumbers";
 import { postBinCollectionDetailsToDiscordBinChannel as postBinCollectionDetailsToBostonDiscordBinChannel } from "./functions/discord/postBinCollectionDetailsToDiscordBinChannel";
+import { client } from "./db";
 
 export async function main() {
   const binCollectionDetails = await fetchBostonBinCollectionSchedule();
@@ -20,6 +21,9 @@ export async function main() {
       to: phoneNumber,
       message: constructMessage(binCollectionDetails),
     });
+  }
+  if (client) {
+    client.end();
   }
   return;
 }
