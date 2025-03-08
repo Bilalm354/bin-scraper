@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "main": "tsx main.ts",
+    "main": "tsx --no-warnings main.ts",
     "db:push": "npx drizzle-kit push",
     "db:push:prod": "npx drizzle-kit push --config=drizzle-prod.config.ts",
     "db:start": "docker run --name dev-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=my_dev_db -p 5432:5432 -d postgres",
