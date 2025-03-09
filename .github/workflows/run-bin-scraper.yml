@@ -2,7 +2,7 @@ name: Run main.ts
 on:
   workflow_dispatch:
   schedule:
-    - cron: "50 14 * * 0" # Run every Sunday at 2:50 PM UTC
+    - cron: "50 19 * * 0" # Run every Sunday at 7:50 PM UTC
 jobs:
   test:
     timeout-minutes: 60
